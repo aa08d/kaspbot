@@ -7,8 +7,8 @@ from .base import Base
 class Consumption(Base):
     __tablename__ = 'consumptions'
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid7())
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid7)
     previous = Column(Float(asdecimal=True))
     current = Column(Float(asdecimal=True), nullable=True)
-    photo_url = Column(String, nullable=True)
+    photo_url = Column(String(255), nullable=True)
     date = Column(Date)
