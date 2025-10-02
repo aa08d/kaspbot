@@ -26,7 +26,7 @@ class DocumentDAO:
         document = await self.session.execute(stmt)
         return document.scalar_one_or_none()
 
-    async def create_document(self, user_id: UUID) -> Document:
+    async def create(self, user_id: UUID) -> Document:
         document = Document(
             user_id=user_id,
             date=date.today()
