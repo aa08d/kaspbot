@@ -23,6 +23,8 @@ class ConsumptionDAO:
             extract("month", Consumption.date) == month,
             extract("year", Consumption.date) == year,
         )
+        consumption = await self.session.execute(stmt)
+        return consumption.scalar_one_or_none()
 
     async def create(
             self,
