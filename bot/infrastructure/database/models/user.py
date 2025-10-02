@@ -1,5 +1,5 @@
 from uuid6 import uuid7
-from sqlalchemy import Column, UUID, String, BigInteger
+from sqlalchemy import Column, UUID, String
 
 from .base import Base
 
@@ -11,4 +11,3 @@ class User(Base):
     first_name = Column(String(255))
     last_name = Column(String(255))
     phone = Column(String(15))
-    telegram_id = Column(BigInteger)
