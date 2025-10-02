@@ -1,10 +1,10 @@
 from .user import UserDAO
-from .consumption import Consumption
-from .document import Document
+from .consumption import ConsumptionDAO
+from .document import DocumentDAO
 
 
 __all__ = (
     "UserDAO",
-    "Consumption",
-    "Document",
+    "ConsumptionDAO",
+    "DocumentDAO",
 )
