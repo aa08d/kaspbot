@@ -17,7 +17,7 @@ class User(Base):
 
     documents = relationship("Document", back_populates="user", cascade="all, delete-orphan")
     consumptions = relationship("Consumption", back_populates="user", cascade="all, delete-orphan")
-    telegrams = relationship("TelegramAuth", back_populates="user", cascade="all, delete-orphan")
+    telegrams = relationship("TelegramAccount", back_populates="user", cascade="all, delete-orphan")
 
 
 class Consumption(Base):
@@ -40,7 +40,7 @@ class Document(Base):
     user = relationship("User", back_populates="documents")
 
 
-class TelegramAuth(Base):
+class TelegramAccount(Base):
     __tablename__ = "telegram_auths"
 
     telegram_id = Column(BigInteger, primary_key=True)
