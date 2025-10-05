@@ -1,0 +1,9 @@
+[bot]
+
+
+[database]
+host = 'localhost'
+port = 5432
+database = 'kaspenergo'
+user = 'postgres'
+password = '2685118'
