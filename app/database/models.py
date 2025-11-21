@@ -14,6 +14,7 @@ class User(Base):
     first_name = Column(String(150))
     last_name = Column(String(150), nullable=True)
     phone = Column(String(15), unique=True)
+    code = Column(String(15), unique=True)
 
     documents = relationship("Document", back_populates="user", cascade="all, delete-orphan")
     consumptions = relationship("Consumption", back_populates="user", cascade="all, delete-orphan")
