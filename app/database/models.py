@@ -1,7 +1,7 @@
 from datetime import date
 
 from uuid6 import uuid7
-from sqlalchemy import Column, UUID, String, Date, Numeric, BigInteger
+from sqlalchemy import Column, UUID, String, Date, Numeric, BigInteger, ForeignKey
 from sqlalchemy.orm import relationship
 
 from .base import Base
@@ -29,21 +29,24 @@ class Consumption(Base):
     photo_url = Column(String(255), nullable=False)
     date = Column(Date, default=date.today)
 
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
     user = relationship("User", back_populates="consumptions")
 
 
-class Document(Base):
-    __tablename__ = "documents"
+class Order(Base):
+    __tablename__ = "orders"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid7)
     date = Column(Date, default=date.today)
 
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
     user = relationship("User", back_populates="documents")
 
 
 class TelegramAccount(Base):
-    __tablename__ = "telegram_auths"
+    __tablename__ = "telegram_accounts"
 
     telegram_id = Column(BigInteger, primary_key=True)
 
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
     user = relationship("User", back_populates="telegrams")
