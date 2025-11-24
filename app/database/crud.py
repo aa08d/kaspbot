@@ -4,8 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models import (
     UserCreateRequest,
     UserCreateResponse,
-    TelegramCreateResponse,
-    TelegramCreateRequest,
+    CreateTelegramRequest,
+    CreateTelegramResponse,
+    GetTelegramRequest,
+    GetTelegramResponse,
     OrderCreateRequest,
     OrderCreateResponse,
     ConsumptionCreateRequest,
@@ -38,8 +40,8 @@ async def create_user(
 
 async def create_telegram_account(
     session: AsyncSession,
-    request: TelegramCreateRequest,
-) -> TelegramCreateResponse | None:
+    request: CreateTelegramRequest,
+) -> CreateTelegramResponse | None:
     stmt = select(User).where(User.phone == request.phone)
     result = await session.execute(stmt)
     user = result.scalar_one_or_none()
@@ -51,7 +53,7 @@ async def create_telegram_account(
     session.add(telegram)
     await session.commit()
 
-    return TelegramCreateResponse(
+    return CreateTelegramResponse(
         id=user.id,
         first_name=user.first_name,
         last_name=user.last_name,
@@ -59,6 +61,21 @@ async def create_telegram_account(
         code=user.code,
     )
 
+async def get_telegram_account(
+    session: AsyncSession,
+    request: GetTelegramRequest,
+) -> GetTelegramResponse | None:
+    stmt = select(TelegramAccount).where(TelegramAccount.telegram_id == request.telegram_id)
+    result = await session.execute(stmt)
+    telegram = result.scalar_one_or_none()
+
+    if telegram is None:
+        return None
+
+    return GetTelegramResponse(
+        telegram_id=telegram.telegram_id,
+        user_id=telegram.user_id,
+    )
 
 async def create_order(
     session: AsyncSession,
