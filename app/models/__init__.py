@@ -1,23 +1,30 @@
-from .user import UserCreateRequest, UserCreateResponse
+from .user import (
+    CreateUserRequest,
+    CreateUserResponse,
+    GetUserByPhoneRequest,
+    GetUserByPhoneResponse,
+)
 from .telegram import (
     CreateTelegramRequest,
     CreateTelegramResponse,
     GetTelegramRequest,
     GetTelegramResponse,
 )
-from .order import OrderCreateRequest, OrderCreateResponse
-from .consumption import ConsumptionCreateRequest, ConsumptionCreateResponse
+from .order import CreateOrderRequest, CreateOrderResponse
+from .consumption import CreateConsumptionRequest, CreateConsumptionResponse
 
 
 __all__ = (
-    "UserCreateRequest",
-    "UserCreateResponse",
+    "CreateUserRequest",
+    "CreateUserResponse",
+    "GetUserByPhoneRequest",
+    "GetUserByPhoneResponse",
     "CreateTelegramRequest",
     "CreateTelegramResponse",
     "GetTelegramRequest",
     "GetTelegramResponse",
-    "OrderCreateRequest",
-    "OrderCreateResponse",
-    "ConsumptionCreateRequest",
-    "ConsumptionCreateResponse",
+    "CreateOrderRequest",
+    "CreateOrderResponse",
+    "CreateConsumptionRequest",
+    "CreateConsumptionResponse",
 )

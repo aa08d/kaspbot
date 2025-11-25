@@ -8,6 +8,7 @@ from adaptix import Retort
 
 from app.database import DBConfig
 from app.telegram import BotConfig, WebhookConfig
+from app.s3 import S3Config
 
 T = TypeVar("T")
 DEFAULT_CONFIG_PATH = "./config/config.toml"
@@ -18,6 +19,7 @@ class Config:
     database: DBConfig
     bot: BotConfig
     webhook: WebhookConfig
+    s3: S3Config
 
 
 def read_toml(path: str) -> dict:

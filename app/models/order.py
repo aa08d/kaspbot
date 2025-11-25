@@ -4,12 +4,12 @@ from datetime import date
 
 
 @dataclass(frozen=True)
-class OrderCreateRequest:
+class CreateOrderRequest:
     code: str
 
 
 @dataclass(frozen=True)
-class OrderCreateResponse:
+class CreateOrderResponse:
     id: UUID
     date: date
     user_id: UUID

@@ -4,7 +4,8 @@ from datetime import date
 
 
 @dataclass(frozen=True)
-class ConsumptionCreateRequest:
+class CreateConsumptionRequest:
+    id: UUID
     telegram_id: int
     readings: int | float
     photo_url: str
@@ -12,7 +13,7 @@ class ConsumptionCreateRequest:
 
 
 @dataclass(frozen=True)
-class ConsumptionCreateResponse:
+class CreateConsumptionResponse:
     id: UUID
     readings: int | float
     photo_url: str

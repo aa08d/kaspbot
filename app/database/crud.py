@@ -2,24 +2,26 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
-    UserCreateRequest,
-    UserCreateResponse,
+    CreateUserRequest,
+    CreateUserResponse,
+    GetUserByPhoneRequest,
+    GetUserByPhoneResponse,
     CreateTelegramRequest,
     CreateTelegramResponse,
     GetTelegramRequest,
     GetTelegramResponse,
-    OrderCreateRequest,
-    OrderCreateResponse,
-    ConsumptionCreateRequest,
-    ConsumptionCreateResponse,
+    CreateOrderRequest,
+    CreateOrderResponse,
+    CreateConsumptionRequest,
+    CreateConsumptionResponse,
 )
 from app.database.models import User, TelegramAccount, Order, Consumption
 
 
 async def create_user(
     session: AsyncSession,
-    request: UserCreateRequest
-) -> UserCreateResponse:
+    request: CreateUserRequest,
+) -> CreateUserResponse | None:
     user = User(
         first_name=request.first_name,
         last_name=request.last_name,
@@ -29,7 +31,26 @@ async def create_user(
     session.add(user)
     await session.commit()
 
-    return UserCreateResponse(
+    return CreateUserResponse(
+        id=user.id,
+        first_name=user.first_name,
+        last_name=user.last_name,
+        phone=user.phone,
+        code=user.code,
+    )
+
+async def get_user_by_phone(
+    session: AsyncSession,
+    request: GetUserByPhoneRequest,
+) -> GetUserByPhoneResponse | None:
+    stmt = select(User).where(User.phone == request.phone)
+    result = await session.execute(stmt)
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        return None
+
+    return GetUserByPhoneResponse(
         id=user.id,
         first_name=user.first_name,
         last_name=user.last_name,
@@ -79,8 +100,8 @@ async def get_telegram_account(
 
 async def create_order(
     session: AsyncSession,
-    request: OrderCreateRequest,
-) -> OrderCreateResponse | None:
+    request: CreateOrderRequest,
+) -> CreateOrderResponse | None:
     stmt = select(User).where(User.code == request.code)
     result = await session.execute(stmt)
     user = result.scalar_one_or_none()
@@ -92,7 +113,7 @@ async def create_order(
     session.add(order)
     await session.commit()
 
-    return OrderCreateResponse(
+    return CreateOrderResponse(
         id=order.id,
         date=order.date,
         user_id=user.id,
@@ -101,8 +122,8 @@ async def create_order(
 
 async def create_consumption(
     session: AsyncSession,
-    request: ConsumptionCreateRequest,
-) -> ConsumptionCreateResponse | None:
+    request: CreateConsumptionRequest,
+) -> CreateConsumptionResponse | None:
     stmt = select(TelegramAccount).where(TelegramAccount.telegram_id == request.telegram_id)
     result = await session.execute(stmt)
     telegram = result.scalar_one_or_none()
@@ -111,6 +132,7 @@ async def create_consumption(
         return None
 
     consumption = Consumption(
+        id=request.id,
         readings=request.readings,
         photo_url=request.photo_url,
         user_id=telegram.user_id,
@@ -118,7 +140,7 @@ async def create_consumption(
     session.add(consumption)
     await session.commit()
 
-    return ConsumptionCreateResponse(
+    return CreateConsumptionResponse(
         id=consumption.id,
         readings=consumption.readings,
         photo_url=consumption.photo_url,

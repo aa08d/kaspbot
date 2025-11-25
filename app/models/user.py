@@ -3,7 +3,7 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class UserCreateRequest:
+class CreateUserRequest:
     first_name: str
     last_name: str
     phone: str
@@ -11,9 +11,24 @@ class UserCreateRequest:
 
 
 @dataclass(frozen=True)
-class UserCreateResponse:
+class CreateUserResponse:
     id: UUID
     first_name: str
     last_name: str
     phone: str
     code: str
+
+
+@dataclass(frozen=True)
+class GetUserByPhoneRequest:
+    phone: str
+
+
+@dataclass(frozen=True)
+class GetUserByPhoneResponse:
+    id: UUID
+    first_name: str
+    last_name: str
+    phone: str
+    code: str
+
