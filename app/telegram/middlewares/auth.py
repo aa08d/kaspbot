@@ -18,13 +18,13 @@ class AuthMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        user_id = event.from_user.id
+        user_id = data['event_from_user'].id
         session = data.get("session")
 
         telegram_account = await get_telegram_account(session, GetTelegramRequest(user_id))
 
         if telegram_account is None:
-            await event.answer(
+            await event.message.answer(
                 "Пожалуйста, отправьте своей номер телефона",
                 reply_markup=share_phone_keyboard,
             )
