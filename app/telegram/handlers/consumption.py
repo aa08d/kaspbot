@@ -16,10 +16,12 @@ from app.s3 import S3Service
 router = Router()
 
 
+@router.callback_query(MenuCallbackData.filter(F.category == 'consumption'))
 async def consumption_category_callback(callback: CallbackQuery) -> None:
     await callback.message.answer("Категория показаний", reply_markup=consumption_keyboard)
 
 
+@router.callback_query(ConsumptionCallbackData.filter(F.action == 'add'))
 async def add_consumption_callback(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.message.answer("Введите показания")
     await state.set_state(AddConsumptionState.readings)
