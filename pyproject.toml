@@ -8,6 +8,7 @@ dependencies = [
     "adaptix>=3.0.0b11",
     "aioboto3>=15.5.0",
     "aiogram>=3.22.0",
+    "alembic>=1.17.2",
     "asyncpg>=0.30.0",
     "sqlalchemy>=2.0.44",
     "uuid6>=2025.0.1",

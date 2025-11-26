@@ -16,8 +16,8 @@ DEFAULT_CONFIG_PATH = "./config/config.toml"
 
 @dataclass(frozen=True)
 class Config:
-    database: DBConfig
     bot: BotConfig
+    database: DBConfig
     webhook: WebhookConfig
     s3: S3Config
 

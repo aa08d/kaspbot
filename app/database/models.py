@@ -16,7 +16,7 @@ class User(Base):
     phone = Column(String(15), unique=True)
     code = Column(String(15), unique=True)
 
-    documents = relationship("Document", back_populates="user", cascade="all, delete-orphan")
+    orders = relationship("Order", back_populates="user", cascade="all, delete-orphan")
     consumptions = relationship("Consumption", back_populates="user", cascade="all, delete-orphan")
     telegrams = relationship("TelegramAccount", back_populates="user", cascade="all, delete-orphan")
 
@@ -40,7 +40,7 @@ class Order(Base):
     date = Column(Date, default=date.today)
 
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
-    user = relationship("User", back_populates="documents")
+    user = relationship("User", back_populates="orders")
 
 
 class TelegramAccount(Base):
